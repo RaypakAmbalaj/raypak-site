@@ -6,7 +6,11 @@ import { pathToFileURL } from "node:url";
 
 const kok = path.resolve(process.cwd());
 const dist = path.join(kok, "dist");
-const { render } = await import(pathToFileURL(path.join(kok, "dist-ssr/entry-server.js")).href);
+// SSR çıktısının adı ortama göre değişebilir; entry-server ile başlayan .js dosyasını bul
+const ssrDosya = fs.readdirSync(path.join(kok, "dist-ssr"), { recursive: true })
+  .map(String).find((f) => /entry-server[^/]*\.m?js$/.test(f));
+if (!ssrDosya) throw new Error("dist-ssr içinde entry-server bulunamadı");
+const { render } = await import(pathToFileURL(path.join(kok, "dist-ssr", ssrDosya)).href);
 const { T, YOL, SITE, FIRMA } = await import(pathToFileURL(path.join(kok, "src/icerik.js")).href);
 
 const sablon = fs.readFileSync(path.join(dist, "index.html"), "utf8");
