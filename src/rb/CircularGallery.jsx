@@ -3,8 +3,9 @@
 import { useEffect, useRef, useState } from 'react';
 import './CircularGallery.css';
 
-const DEFAULT_FONT = 'bold 30px Figtree';
-const DEFAULT_FONT_URL = 'https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap';
+// Raypak: dış sunucudan yazı tipi indirilmez; sitenin kendi Archivo yazı tipi kullanılır
+const DEFAULT_FONT = '800 30px Archivo';
+const DEFAULT_FONT_URL = null;
 const SEGMENTS_X = 32;
 const SEGMENTS_Y = 24;
 const INTRO_SECONDS = 1.4;
@@ -20,20 +21,7 @@ const CLASSES = {
   hidden: 'circular-gallery-hidden'
 };
 const STEPS = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
-const DEFAULT_ITEMS = [
-  { image: 'https://picsum.photos/seed/1/800/600', text: 'Bridge' },
-  { image: 'https://picsum.photos/seed/2/800/600', text: 'Desk Setup' },
-  { image: 'https://picsum.photos/seed/3/800/600', text: 'Waterfall' },
-  { image: 'https://picsum.photos/seed/4/800/600', text: 'Strawberries' },
-  { image: 'https://picsum.photos/seed/5/800/600', text: 'Deep Diving' },
-  { image: 'https://picsum.photos/seed/16/800/600', text: 'Train Track' },
-  { image: 'https://picsum.photos/seed/17/800/600', text: 'Santorini' },
-  { image: 'https://picsum.photos/seed/8/800/600', text: 'Blurry Lights' },
-  { image: 'https://picsum.photos/seed/9/800/600', text: 'New York' },
-  { image: 'https://picsum.photos/seed/10/800/600', text: 'Good Boy' },
-  { image: 'https://picsum.photos/seed/21/800/600', text: 'Coastline' },
-  { image: 'https://picsum.photos/seed/12/800/600', text: 'Palm Trees' }
-];
+const DEFAULT_ITEMS = [];
 
 const VERTEX = `#version 300 es
 in vec2 aPosition;

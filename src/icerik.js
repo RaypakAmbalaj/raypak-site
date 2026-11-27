@@ -31,11 +31,11 @@ export const T = {
     dilAdi: "Türkçe",
     menu: { urunler: "Ürünler", hammadde: "Hammaddeler", hakkimizda: "Hakkımızda", iletisim: "İletişim", teklif: "Teklif İsteyin", ac: "Menüyü aç", kapat: "Menüyü kapat", anaSayfa: "Ana sayfa", icerigeGec: "İçeriğe geç" },
     meta: {
-      ana: ["Raypak Ambalaj | Polipropilen Plastik Kova Üreticisi, İstanbul", "İkitelli OSB'deki tesisimizde PP kopolimer ve PP random granülden enjeksiyonla 0,75 L ile 20 L arası markasız plastik kova üretiyoruz. Yurt içi ve ihracat."],
+      ana: ["Raypak Ambalaj | Plastik Kova Üreticisi, İstanbul", "İkitelli OSB'deki tesisimizde PP kopolimer ve PP random granülden enjeksiyonla 0,75 L ile 20 L arası markasız plastik kova üretiyoruz. Yurt içi ve ihracat."],
       urunler: ["Plastik Kova Ürünleri, 0,75 L ile 20 L | Raypak Ambalaj", "0,75 litreden 20 litreye kapaklı ve kapaksız, markasız polipropilen kovalar. Boya, kimya ve yapı kimyasalları için toptan üretim."],
-      hammadde: ["Hammaddeler: PP Kopolimer, PP Random, PE, PVC, PS | Raypak Ambalaj", "Kova üretiminde kullandığımız polimerler ve her birinin kovaya kattığı özellikler."],
-      hakkimizda: ["Hakkımızda | Raypak Ambalaj", "İstanbul İkitelli OSB'de kendi tesisinde enjeksiyonla polipropilen kova üreten ambalaj firması."],
-      iletisim: ["İletişim ve Teklif | Raypak Ambalaj", "Plastik kova fiyat teklifi, numune ya da sorularınız için Raypak Ambalaj ile iletişime geçin."],
+      hammadde: ["Hammaddeler: PP, PE, PVC, PS | Raypak Ambalaj", "Plastik kova üretiminde kullandığımız PP kopolimer, PP random, polietilen, PVC ve polistiren granüller; her birinin kovaya kattığı özellikler."],
+      hakkimizda: ["Hakkımızda | Raypak Ambalaj", "Raypak Ambalaj, İstanbul İkitelli OSB'deki kendi tesisinde enjeksiyon yöntemiyle polipropilen kova üreten bir ambalaj firmasıdır. Firma bilgileri ve ilkelerimiz."],
+      iletisim: ["İletişim ve Teklif | Raypak Ambalaj", "Plastik kova fiyat teklifi, numune ve ihracat talepleriniz için Raypak Ambalaj ile iletişime geçin. Telefon, e-posta, adres ve hızlı teklif formu."],
       bulunamadi: ["Sayfa bulunamadı | Raypak Ambalaj", "Aradığınız sayfa bulunamadı."],
     },
     giris: {
@@ -111,11 +111,11 @@ export const T = {
     dilAdi: "English",
     menu: { urunler: "Products", hammadde: "Raw materials", hakkimizda: "About", iletisim: "Contact", teklif: "Request a Quote", ac: "Open menu", kapat: "Close menu", anaSayfa: "Home", icerigeGec: "Skip to content" },
     meta: {
-      ana: ["Raypak Ambalaj | Polypropylene Plastic Pail Manufacturer, Istanbul", "We injection-mould unbranded plastic pails from 0.75 L to 20 L out of PP copolymer and PP random in our own facility in Istanbul. Domestic supply and export."],
+      ana: ["Raypak Ambalaj | Plastic Pail Manufacturer, Istanbul", "We injection-mould unbranded plastic pails from 0.75 L to 20 L out of PP copolymer and PP random in our own facility in Istanbul. Domestic supply and export."],
       urunler: ["Plastic Pails, 0.75 L to 20 L | Raypak Ambalaj", "Unbranded polypropylene pails from 0.75 to 20 litres, with or without lids. Wholesale production for paint, chemicals and construction chemicals."],
-      hammadde: ["Raw Materials: PP Copolymer, PP Random, PE, PVC, PS | Raypak Ambalaj", "The polymers we use in production and what each one brings to a pail."],
-      hakkimizda: ["About Us | Raypak Ambalaj", "A packaging company injection-moulding polypropylene pails in its own facility in İkitelli OSB, Istanbul."],
-      iletisim: ["Contact and Quotes | Raypak Ambalaj", "Contact Raypak Ambalaj for plastic pail quotes, samples or any question."],
+      hammadde: ["Raw Materials: PP, PE, PVC, PS | Raypak Ambalaj", "The PP copolymer, PP random, polyethylene, PVC and polystyrene granules we use to make plastic pails, and what each one brings to the finished pail."],
+      hakkimizda: ["About Us | Raypak Ambalaj", "Raypak Ambalaj is a packaging company injection-moulding polypropylene pails in its own facility in İkitelli OSB, Istanbul. Company details and principles."],
+      iletisim: ["Contact and Quotes | Raypak Ambalaj", "Contact Raypak Ambalaj in Istanbul for plastic pail price quotes, samples and export enquiries. Phone, email, address and a quick quote form."],
       bulunamadi: ["Page not found | Raypak Ambalaj", "The page you are looking for could not be found."],
     },
     giris: {

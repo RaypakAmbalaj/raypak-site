@@ -409,7 +409,7 @@ const VariableProximity = forwardRef((props, ref) => {
           </span>
         </Fragment>
       ))}
-      <span className="sr-only">{label}</span>
+      {/* Erişilebilir ad, kapsayıcı başlıktaki aria-label ile verilir; metin sayfada iki kez yer almaz */}
     </span>
   );
 });

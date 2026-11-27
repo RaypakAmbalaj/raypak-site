@@ -47,12 +47,12 @@ address{font-style:normal}
 .ust.acik .menudugme i:last-child{transform:translateY(-4px) rotate(-45deg)}
 
 /* giriş */
-.giris{position:relative;height:100svh;min-height:680px;overflow:hidden;background:radial-gradient(120% 80% at 70% 100%,#F3E9D3 0%,var(--krem) 60%)}
+.giris{position:relative;min-height:max(680px,100svh);padding-bottom:clamp(150px,24vh,260px);overflow:hidden;background:radial-gradient(120% 80% at 70% 100%,#F3E9D3 0%,var(--krem) 60%)}
 .havuz{position:absolute;inset:0}
 .giris-yazi{position:relative;z-index:2;padding:clamp(130px,19vh,200px) var(--kenar) 0;max-width:920px;pointer-events:none}
 .giris-yazi a{pointer-events:auto}
 .ust-not{font-weight:600;color:var(--visne);margin:0 0 18px;font-size:16px}
-.giris h1{font-size:clamp(40px,5.2vw,84px);font-weight:640;line-height:1.02}
+.giris h1{font-size:clamp(34px,min(5.2vw,8.6vh),84px);font-weight:640;line-height:1.02}
 .giris-p{max-width:540px;font-size:19px;color:#3E3833;margin:26px 0 32px}
 .eylem{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
 
@@ -85,6 +85,14 @@ address{font-style:normal}
 .hammadde .bas p{color:#CFC5B8}
 .hammadde .bag{color:var(--kum)}
 .galeri{height:min(68vh,600px);position:relative}
+.galeri.duz{height:auto}
+.serit{list-style:none;margin:0;padding:10px var(--kenar) 6px;display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--kenar);scrollbar-width:thin;scrollbar-color:#6E655C transparent}
+.serit li{flex:0 0 clamp(220px,26vw,340px);scroll-snap-align:start;min-width:0}
+.serit img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:14px}
+.serit span{display:block;margin-top:12px;font-size:20px;font-weight:800;font-stretch:112%;color:var(--krem)}
+.serit-ok{display:flex;gap:10px;justify-content:flex-end;padding:14px var(--kenar) 0}
+.serit-ok button{width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(250,246,236,.4);background:transparent;color:var(--krem);font-size:26px;line-height:1;cursor:pointer}
+.serit-ok button:hover{background:rgba(250,246,236,.1)}
 
 /* sektör menüsü */
 .sektor{padding:120px 0 0}
@@ -94,17 +102,19 @@ address{font-style:normal}
 /* üretim kartları */
 .uretim{padding:130px 0 40px}
 .uretim .bas p{color:var(--soluk)}
-.adim{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px;align-items:stretch;height:min(62vh,460px)!important;border-radius:24px!important;overflow:hidden;padding:0!important;box-shadow:0 -10px 40px -20px rgba(0,0,0,.35)!important}
-.adim img{width:100%;height:100%;object-fit:cover}
-.adim-yazi{padding:40px 44px;display:flex;flex-direction:column;justify-content:space-between;position:relative;z-index:1;min-height:0}
-.adim .no{font-size:clamp(72px,8vw,124px);font-weight:800;font-stretch:125%;line-height:.8}
+.yigin{list-style:none;margin:0;padding:0 var(--kenar);display:grid;gap:clamp(40px,12vh,140px)}
+.adim{position:sticky;top:calc(clamp(84px,14vh,130px) + var(--i)*22px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);height:clamp(340px,60vh,480px);border-radius:24px;overflow:hidden;box-shadow:0 -14px 40px -22px rgba(0,0,0,.45)}
+.adim-foto{position:relative;min-height:0}
+.adim-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.adim-yazi{padding:clamp(24px,3vw,44px);display:flex;flex-direction:column;justify-content:flex-start;gap:clamp(18px,3vh,32px);min-height:0;overflow:hidden}
+.adim .no{font-size:clamp(64px,7vw,124px);font-weight:800;font-stretch:125%;line-height:.8}
 .adim-yazi>div{display:grid;gap:12px}
-.adim h3{font-size:clamp(26px,2.6vw,40px);font-weight:800;font-stretch:110%}
+.adim h3{font-size:clamp(24px,2.4vw,38px);font-weight:800;font-stretch:110%}
 .adim p{margin:0;max-width:420px}
-.kart-krem{background:#fff!important;color:var(--komur)!important}.kart-krem .no{color:var(--visne)}
-.kart-kum{background:var(--kum)!important;color:var(--komur)!important}.kart-kum .no{color:var(--visne-k)}
-.kart-visne{background:var(--visne)!important;color:var(--krem)!important}.kart-visne .no{color:var(--kum)}
-.kart-komur{background:var(--komur)!important;color:var(--krem)!important}.kart-komur .no{color:var(--visne-p)}
+.kart-krem{background:#fff;color:var(--komur)}.kart-krem .no{color:var(--visne)}
+.kart-kum{background:var(--kum);color:var(--komur)}.kart-kum .no{color:var(--visne-k)}
+.kart-visne{background:var(--visne);color:var(--krem)}.kart-visne .no{color:var(--kum)}
+.kart-komur{background:var(--komur);color:var(--krem)}.kart-komur .no{color:var(--visne-p)}
 
 /* ürünler: hacim kartları */
 .hacimler{list-style:none;margin:0;padding:0 var(--kenar);display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
@@ -199,8 +209,8 @@ address{font-style:normal}
   body{font-size:17px}
   .ust{top:10px;padding:7px 7px 7px 16px;gap:14px}
   .ust .logo-svg{width:108px}
-  .giris{min-height:640px}
-  .giris h1{font-size:36px}
+  .giris{min-height:max(640px,100svh);padding-bottom:150px}
+  .giris h1{font-size:clamp(30px,9vw,36px)}
   .giris-yazi{padding-top:116px}
   .giris-p{font-size:17px;margin:18px 0 24px}
   .sayfabas{padding:130px var(--kenar) 50px}
@@ -217,9 +227,8 @@ address{font-style:normal}
   .malzeme img{min-height:0;aspect-ratio:16/9}
   .tablo>div{grid-template-columns:minmax(0,1fr);gap:4px}
   .alanlar{grid-template-columns:minmax(0,1fr)}
-  .adim{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:0;height:520px!important}
-  .adim-yazi{padding:26px}
-  .adim .no{font-size:56px}
+  .adim{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);height:min(520px,78svh);top:calc(76px + var(--i)*14px)}
+  .adim .no{font-size:52px}
   .galeri{height:420px}
   .cagri{padding:100px var(--kenar) 90px}
 }
@@ -229,3 +238,7 @@ address{font-style:normal}
 .akan{cursor:grab;touch-action:pan-y;-webkit-user-select:none;user-select:none}
 .akan.tutuluyor{cursor:grabbing}
 .akan .scroller{will-change:transform}
+
+/* sektör listesindeki küçük açıklama: okunur kontrast ve boyut */
+.sektor-menu .flowing-menu__meta{opacity:1;color:#5E554D;font-size:clamp(13px,12cqh,16px)}
+.sektor-menu .flowing-menu__arrow{opacity:.75}

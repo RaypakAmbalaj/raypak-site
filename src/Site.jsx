@@ -2,7 +2,6 @@ import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import VariableProximity from "./rb/VariableProximity";
 import AkanYazi from "./rb/AkanYazi";
 import FlowingMenu from "./rb/FlowingMenu";
-import ScrollStack, { ScrollStackItem } from "./rb/ScrollStack";
 import Magnet from "./rb/Magnet";
 import logoAcik from "../public/assets/logo/raypak-logo.svg?raw";
 import logoKoyu from "../public/assets/logo/raypak-logo-koyu.svg?raw";
@@ -175,14 +174,42 @@ function SayfaBas({ baslik, giris }) {
   );
 }
 
+/* tarayıcı WebGL destekliyor mu (3B galeri ve granül havuzu için) */
+function webglVar() {
+  try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); }
+  catch { return false; }
+}
+
 function Galeri({ dil }) {
   const ref = useRef(null);
+  const serit = useRef(null);
   const yakin = useYakin(ref);
-  const items = T[dil].hammaddeSayfa.liste.map((m) => ({ image: IMG(m[4]), text: m[2].replace(/ \(.*\)/, "") }));
+  const [gl, setGl] = useState(false);
+  useEffect(() => { setGl(webglVar() && !matchMedia("(prefers-reduced-motion: reduce)").matches); }, []);
+  const liste = T[dil].hammaddeSayfa.liste;
+  const items = liste.map((m) => ({ image: IMG(m[4]), text: m[2].replace(/ \(.*\)/, "") }));
+  const kaydir = (yon) => serit.current?.scrollBy({ left: yon * serit.current.clientWidth * 0.8, behavior: "smooth" });
+  const uc = gl && yakin;
   return (
-    <div className="galeri" ref={ref}>
-      {yakin && <Suspense fallback={null}><CircularGallery items={items} bend={2.4} textColor="#FAF6EC" borderRadius={0.03}
-        scrollSpeed={2} scrollEase={0.05} itemAspect={0.8} openOnClick={false} /></Suspense>}
+    <div className={uc ? "galeri" : "galeri duz"} ref={ref}>
+      {uc ? (
+        <Suspense fallback={null}><CircularGallery items={items} font="800 30px Archivo" bend={2.4} textColor="#FAF6EC" borderRadius={0.03}
+          scrollSpeed={2} scrollEase={0.05} itemAspect={0.8} openOnClick={false} /></Suspense>
+      ) : (
+        /* 3B galeri yüklenene kadar ya da tarayıcı desteklemiyorsa: elle kaydırılan düz şerit */
+        <>
+          <ul className="serit" ref={serit} tabIndex={0} aria-label={T[dil].menu.hammadde}
+            onKeyDown={(e) => { if (e.key === "ArrowRight") { e.preventDefault(); kaydir(1); } if (e.key === "ArrowLeft") { e.preventDefault(); kaydir(-1); } }}>
+            {liste.map((m) => (
+              <li key={m[2]}><img src={IMG(m[4], 800)} alt="" loading="lazy" width="800" height="600" /><span>{m[2]}</span></li>
+            ))}
+          </ul>
+          <div className="serit-ok">
+            <button type="button" onClick={() => kaydir(-1)} aria-label={dil === "tr" ? "Önceki" : "Previous"}>‹</button>
+            <button type="button" onClick={() => kaydir(1)} aria-label={dil === "tr" ? "Sonraki" : "Next"}>›</button>
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -202,14 +229,15 @@ function Uretim({ dil }) {
   return (
     <section className="uretim">
       <div className="bas"><h2>{t.baslik}</h2><p>{t.metin}</p></div>
-      <ScrollStack useWindowScroll smoothScroll={false} itemDistance={120} itemStackDistance={28} stackPosition="16%" baseScale={0.86} itemScale={0.035} dimAmount={0.15}>
+      {/* Kartlar tarayıcının kendi "sticky" özelliğiyle üst üste biner: JavaScript hesabı yok, her zoom ve ekranda aynı çalışır */}
+      <ol className="yigin">
         {t.adim.map(([b, m], i) => (
-          <ScrollStackItem key={b} itemClassName={`adim ${renk[i][1]}`}>
+          <li key={b} className={`adim ${renk[i][1]}`} style={{ "--i": i }}>
             <div className="adim-yazi"><span className="no" aria-hidden="true">{i + 1}</span><div><h3>{b}</h3><p>{m}</p></div></div>
-            <img src={IMG(renk[i][0], 800)} alt="" loading="lazy" width="800" height="600" />
-          </ScrollStackItem>
+            <div className="adim-foto"><img src={IMG(renk[i][0], 800)} alt="" loading="lazy" width="800" height="600" /></div>
+          </li>
         ))}
-      </ScrollStack>
+      </ol>
     </section>
   );
 }
@@ -221,18 +249,20 @@ function Ana({ dil }) {
   const girisRef = useRef(null);
   const bosta = useBosta();
   const mobil = useMobil();
+  const [gl, setGl] = useState(false);
+  useEffect(() => { setGl(webglVar()); }, []);
   const bosluk = "  ";
   return (
     <>
       <section className="giris" ref={girisRef}>
         <div className="havuz" aria-hidden="true">
-          {bosta && <Suspense fallback={null}><Ballpit key={mobil ? "m" : "d"} count={mobil ? 70 : 140} colors={["#FAF6EC", "#E7D5A8", "#A8153A", "#E23A5E", "#FFFFFF"]}
+          {bosta && gl && <Suspense fallback={null}><Ballpit key={mobil ? "m" : "d"} count={mobil ? 70 : 140} colors={["#FAF6EC", "#E7D5A8", "#A8153A", "#E23A5E", "#FFFFFF"]}
             material="gloss" minSize={mobil ? 0.55 : 0.45} maxSize={mobil ? 1.1 : 1.05} gravity={0.6} friction={0.9975}
             wallBounce={0.9} followCursor cursorSize={1.6} lightIntensity={1.1} exposure={1.05} shadows={0.5} /></Suspense>}
         </div>
         <div className="giris-yazi">
           <p className="ust-not">{t.giris.ust}</p>
-          <h1>
+          <h1 aria-label={t.giris.baslik}>
             <VariableProximity label={t.giris.baslik}
               fromFontVariationSettings="'wght' 640, 'wdth' 100" toFontVariationSettings="'wght' 900, 'wdth' 125"
               containerRef={girisRef} radius={160} falloff="gaussian" smoothing={0.25} />
