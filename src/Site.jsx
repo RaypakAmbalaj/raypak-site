@@ -246,7 +246,7 @@ function Ana({ dil }) {
       </section>
 
       <section className="akis">
-        <AkanYazi metinler={[HACIM.map(t.litre).join(bosluk) + bosluk, t.akis.satir2.join(bosluk) + bosluk]} hiz={60} className="akis-yazi" kopya={4} />
+        <AkanYazi metinler={[HACIM.map(t.litre).join(bosluk) + bosluk, t.akis.satir2.join(bosluk) + bosluk]} hiz={110} className="akis-yazi" kopya={4} />
         <div className="akis-alt">
           <h2>{t.akis.baslik}</h2>
           <div><p>{t.akis.metin}</p><a className="bag" href={y.urunler}>{t.akis.bag}</a></div>

@@ -224,3 +224,8 @@ address{font-style:normal}
   .cagri{padding:100px var(--kenar) 90px}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+
+/* kayan yazı: sürüklenebilir */
+.akan{cursor:grab;touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.akan.tutuluyor{cursor:grabbing}
+.akan .scroller{will-change:transform}
