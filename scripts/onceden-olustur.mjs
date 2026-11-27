@@ -13,7 +13,10 @@ if (!ssrDosya) throw new Error("dist-ssr içinde entry-server bulunamadı");
 const { render } = await import(pathToFileURL(path.join(kok, "dist-ssr", ssrDosya)).href);
 const { T, YOL, SITE, FIRMA } = await import(pathToFileURL(path.join(kok, "src/icerik.js")).href);
 
-const sablon = fs.readFileSync(path.join(dist, "index.html"), "utf8");
+// Stil dosyası küçük (yaklaşık 20 KB): sayfanın içine gömülür, ilk görüntü ayrı bir istek beklemez
+let sablon = fs.readFileSync(path.join(dist, "index.html"), "utf8");
+sablon = sablon.replace(/<link rel="stylesheet"[^>]*href="(\/assets\/[^"]+\.css)"[^>]*>/, (_, href) =>
+  `<style>${fs.readFileSync(path.join(dist, href), "utf8")}</style>`);
 const kac = (s) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
 const SAYFALAR = ["ana", "urunler", "hammadde", "hakkimizda", "iletisim"];

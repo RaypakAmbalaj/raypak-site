@@ -178,7 +178,7 @@ address{font-style:normal}
 .alt ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .alt a{text-decoration:none}.alt a:hover{color:var(--krem)}
 .alt p{margin:0;max-width:360px}
-.yasal{font-size:13px;margin-top:24px!important;max-width:none!important;color:#8F857A}
+.yasal{font-size:13px;margin-top:24px!important;max-width:none!important;color:#B3A99C}
 
 @media (max-width:1000px){
   .menu .menu-teklif{display:inline-block}

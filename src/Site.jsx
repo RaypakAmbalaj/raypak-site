@@ -1,8 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import Ballpit from "./rb/Ballpit";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import VariableProximity from "./rb/VariableProximity";
-import { ScrollVelocity } from "./rb/ScrollVelocity";
-import CircularGallery from "./rb/CircularGallery";
+import AkanYazi from "./rb/AkanYazi";
 import FlowingMenu from "./rb/FlowingMenu";
 import ScrollStack, { ScrollStackItem } from "./rb/ScrollStack";
 import Magnet from "./rb/Magnet";
@@ -10,14 +8,39 @@ import logoAcik from "../public/assets/logo/raypak-logo.svg?raw";
 import logoKoyu from "../public/assets/logo/raypak-logo-koyu.svg?raw";
 import { T, YOL, FIRMA, HACIM } from "./icerik.js";
 
+// Ağır WebGL bileşenleri ayrı dosyalara bölünür ve sayfa göründükten sonra yüklenir
+const Ballpit = lazy(() => import("./rb/Ballpit"));
+const CircularGallery = lazy(() => import("./rb/CircularGallery"));
+
 const IMG = (n, w = 1200) => `/assets/img/${n}-${w}.webp`;
 
-/* tarayıcıda çalıştığımızı bildirir: canvas/WebGL bileşenleri yalnızca tarayıcıda çizilir */
-function useTarayici() {
+/* sayfa yüklenip tarayıcı boşa çıkınca true olur: animasyonlar ilk görüntüyü geciktirmez */
+function useBosta(gecikme = 600) {
   const [hazir, setHazir] = useState(false);
-  useEffect(() => setHazir(true), []);
+  useEffect(() => {
+    let iptal = false, t;
+    const basla = () => {
+      const ric = window.requestIdleCallback || ((f) => setTimeout(f, 200));
+      t = setTimeout(() => ric(() => !iptal && setHazir(true)), gecikme);
+    };
+    if (document.readyState === "complete") basla(); else addEventListener("load", basla, { once: true });
+    return () => { iptal = true; clearTimeout(t); removeEventListener("load", basla); };
+  }, [gecikme]);
   return hazir;
 }
+
+/* öğe ekrana yaklaşınca true olur */
+function useYakin(ref, pay = "400px") {
+  const [yakin, setYakin] = useState(false);
+  useEffect(() => {
+    if (!ref.current || yakin) return;
+    const io = new IntersectionObserver(([e]) => e.isIntersecting && setYakin(true), { rootMargin: pay });
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, [ref, pay, yakin]);
+  return yakin;
+}
+
 function useMobil() {
   const [m, setM] = useState(false);
   useEffect(() => {
@@ -153,12 +176,13 @@ function SayfaBas({ baslik, giris }) {
 }
 
 function Galeri({ dil }) {
-  const tarayici = useTarayici();
+  const ref = useRef(null);
+  const yakin = useYakin(ref);
   const items = T[dil].hammaddeSayfa.liste.map((m) => ({ image: IMG(m[4]), text: m[2].replace(/ \(.*\)/, "") }));
   return (
-    <div className="galeri">
-      {tarayici && <CircularGallery items={items} bend={2.4} textColor="#FAF6EC" borderRadius={0.03}
-        scrollSpeed={2} scrollEase={0.05} itemAspect={0.8} openOnClick={false} />}
+    <div className="galeri" ref={ref}>
+      {yakin && <Suspense fallback={null}><CircularGallery items={items} bend={2.4} textColor="#FAF6EC" borderRadius={0.03}
+        scrollSpeed={2} scrollEase={0.05} itemAspect={0.8} openOnClick={false} /></Suspense>}
     </div>
   );
 }
@@ -195,16 +219,16 @@ function Uretim({ dil }) {
 function Ana({ dil }) {
   const t = T[dil], y = YOL[dil];
   const girisRef = useRef(null);
-  const tarayici = useTarayici();
+  const bosta = useBosta();
   const mobil = useMobil();
   const bosluk = "  ";
   return (
     <>
       <section className="giris" ref={girisRef}>
         <div className="havuz" aria-hidden="true">
-          {tarayici && <Ballpit key={mobil ? "m" : "d"} count={mobil ? 70 : 140} colors={["#FAF6EC", "#E7D5A8", "#A8153A", "#E23A5E", "#FFFFFF"]}
+          {bosta && <Suspense fallback={null}><Ballpit key={mobil ? "m" : "d"} count={mobil ? 70 : 140} colors={["#FAF6EC", "#E7D5A8", "#A8153A", "#E23A5E", "#FFFFFF"]}
             material="gloss" minSize={mobil ? 0.55 : 0.45} maxSize={mobil ? 1.1 : 1.05} gravity={0.6} friction={0.9975}
-            wallBounce={0.9} followCursor cursorSize={1.6} lightIntensity={1.1} exposure={1.05} shadows={0.5} />}
+            wallBounce={0.9} followCursor cursorSize={1.6} lightIntensity={1.1} exposure={1.05} shadows={0.5} /></Suspense>}
         </div>
         <div className="giris-yazi">
           <p className="ust-not">{t.giris.ust}</p>
@@ -222,7 +246,7 @@ function Ana({ dil }) {
       </section>
 
       <section className="akis">
-        <ScrollVelocity texts={[HACIM.map(t.litre).join(bosluk) + bosluk, t.akis.satir2.join(bosluk) + bosluk]} velocity={60} className="akis-yazi" numCopies={4} />
+        <AkanYazi metinler={[HACIM.map(t.litre).join(bosluk) + bosluk, t.akis.satir2.join(bosluk) + bosluk]} hiz={60} className="akis-yazi" kopya={4} />
         <div className="akis-alt">
           <h2>{t.akis.baslik}</h2>
           <div><p>{t.akis.metin}</p><a className="bag" href={y.urunler}>{t.akis.bag}</a></div>
